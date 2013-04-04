@@ -1,0 +1,27 @@
+{
+  "name": "api-testing",
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "3.1.0",
+  },
+  "description": "",
+  "main": "server.js",
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "supertest": "*"
+    },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "jedwood"
+}
