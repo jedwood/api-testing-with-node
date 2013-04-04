@@ -1,7 +1,8 @@
 # API Testing with Node.js
 
-> Testing an API with Node.js is dead simple. You can quickly write tests for any API, regardless of its language.
 ---
+
+> Testing an API with Node.js is dead simple. You can quickly write tests for any API, regardless of its language.
 
 ### Hackers Don't Test
 I don't like writing tests. Just ask any of my coding teammates. I spent too many years slapping together quick protoypes that were just for proof of concept and didn't need to be maintained. I think of testing like financial accounting; I know it's vital to keep operations running smoothly, but I much prefer if somebody else handles it.
@@ -9,7 +10,7 @@ I don't like writing tests. Just ask any of my coding teammates. I spent too man
 I'm getting better though, and it's paying off. You've probably already read about the reasons you should write tests. If you're still not convinced, consider this: it's quickly becoming table stakes for most modern web development projects, much like knowing how to use [Github](http://github.com). If you want to contribute to open source projects, or make it past your first interview, you've gotta write tests.
 
 ### Unit, Integration, Functional, and Acceptance
-I'm going to skip the [philosophy](http://www.agitar.com/downloads/TheWayOfTestivus.pdf) and finer points. Read this answer for a great explanation of the [different types of tests](http://stackoverflow.com/a/4904533). To sum it up, on the most granular level you have unit tests. On the other end of the spectrum you have browser-testing tools like [PhantomJS](http://phantomjs.org/) or SaaS options like [BrowserStack](http://browserstack.com) and [Browserling](http://browserling.com). We're going to be closer to that high level testing, but since this is purely an API, we don't need a browser.
+I'm going to skip the [philosophy](http://www.agitar.com/downloads/TheWayOfTestivus.pdf) and finer points. Read this answer for a great explanation of the [different types of tests](http://stackoverflow.com/a/4904533). On the most granular level we have unit tests. On the other end of the spectrum were have browser-testing tools like [PhantomJS](http://phantomjs.org/) or SaaS options like [BrowserStack](http://browserstack.com) and [Browserling](http://browserling.com). We're going to be closer to that high level testing, but since this is purely an API, we don't need a browser.
 
 ### Our Example API
 Let's take a look at our example API, which is a protected pretend blog. In order to show off some of the testing options, this API:
@@ -33,16 +34,17 @@ Install Mocha (`npm install -g mocha`) and check out the [getting started sectio
 
 Let's start with authentication. We want to make sure this API returns proper errors if somebody doesn't get past our two authentication checks:
 
+[See the gist](https://gist.github.com/jedwood/5311084)
 <script src="https://gist.github.com/jedwood/5311084.js"></script>
 
-Don't let the syntax on lines 3 and 10 throw you- we're just giving the tests names that will make sense to us when we view our reports. You can put pretty much anything in there. In both tests (the `it`s), we make a `get` call to `/blog`.
+Don't let the syntax on lines 3 and 10 throw you- we're just giving the tests names that will make sense to us when we view our reports. You can put pretty much anything in there. In both tests (the `it` calls), we make a `get` call to `/blog`.
 
  In our first test, we use `set` to add our custom header with a correct value, but then we set put some bad credentials in `auth` (which creates the BasicAuth header). We're expecting a proper `401` status.
 
 In our second test, we set the correct BasicAuth credentials but intentionally omit the `x-api-key`. We're again expecting a `401` status.
 
 ### Run Nyan Run!
-We're almost ready to run these tests. Let's follow TJ's advice and
+We're almost ready to run these tests. Let's follow TJ's advice:
 
 > Be kind and don't make developers hunt around
 > in your docs to figure out how to run the tests,
@@ -62,20 +64,21 @@ Finally, we jump over to our terminal and run `make test`. Here's what we get:
 
 ![Nyan cat showing failing test](img/nyan-fail.png)
 
-Uh oh. Looks like the API is returning a message that looks like an error, but the status is `200`. Let's fix that by changing this:
+Uh oh. Looks like the API is returning a message that looks like an error, but the status is `200`. Let's fix that in the API code by changing this:
 
-res.send({error: "Bad or missing app identification header"});
+`res.send({error: "Bad or missing app identification header"});`
 
 to this:
 
-res.status(401).send({error: "Bad or missing app identification header"});
+`res.status(401).send({error: "Bad or missing app identification header"});`
 
 ### Expect More
-Confident that it's fixed, I'm going to cheat a bit and add another test before re-running the report.
+Like all good developers, I'm going to be confident that I've fixed it and move on before re-running the report. Let's add another test:
 
+[See the gist](https://gist.github.com/jedwood/5311429)
 <script src="https://gist.github.com/jedwood/5311429.js"></script>
 
-This test added an "end" callback because we're going to be inspecting the actual results of the response body. We send correct authentication and then check four aspects of the result:
+This one has an "end" callback because we're going to be inspecting the actual results of the response body. We send correct authentication and then check four aspects of the result:
 
 - line 7 checks for 200 status
 - line 8 makes sure the format is JSON
@@ -83,7 +86,7 @@ This test added an "end" callback because we're going to be inspecting the actua
 
 It's Chai that's giving us that handy.way.of.checking.things.
 
-Let's run the tests again:
+Run the tests again...wait 46ms...and...
 
 ![Nyan cat showing all tests passing](img/nyan-win.png)
 
@@ -92,4 +95,4 @@ Happy Nyan!
 ### Hackers Don't Mock
 Another common component of testing is the notion of using "mock" objects and/or a sandboxed testing database. What I like about the setup we've covered here is that it doesn't care. We can run our target server in production or dev or testing mode depending on our purpose and risk aversion without changing our tests. Finer-grained unit testing and mock objects certainly have their place, but a lot can go wrong in between those small abstracted pieces and your full production environment. High-level acceptance tests like the ones we've built here are can broadly cover the end user touchpoints. If an error crops up, you'll know where to start digging.
 
-Now go test all the things!
+_Now go test all the things!_
