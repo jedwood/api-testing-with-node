@@ -93,6 +93,6 @@ Run the tests again...wait 46ms...and...
 Happy Nyan!
 
 ### Hackers Don't Mock
-Another common component of testing is the notion of using "mock" objects and/or a sandboxed testing database. What I like about the setup we've covered here is that it doesn't care. We can run our target server in production or dev or testing mode depending on our purpose and risk aversion without changing our tests. Finer-grained unit testing and mock objects certainly have their place, but a lot can go wrong in between those small abstracted pieces and your full production environment. High-level acceptance tests like the ones we've built here are can broadly cover the end user touchpoints. If an error crops up, you'll know where to start digging.
+Another common component of testing is the notion of using "mock" objects and/or a sandboxed testing database. What I like about the setup we've covered here is that it doesn't care. We can run our target server in production or dev or testing mode depending on our purpose and risk aversion without changing our tests. Finer-grained unit testing and mock objects certainly have their place, but a lot can go wrong in between those small abstracted pieces and your full production environment. High-level acceptance tests like the ones we've built here can broadly cover the end user touchpoints. If an error crops up, you'll know where to start digging.
 
 _Now go test all the things!_
