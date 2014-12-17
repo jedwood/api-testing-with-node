@@ -6,7 +6,7 @@
 
 ### Hackers Don't Test
 I don't like writing tests. Just ask any of my coding teammates. I spent too many years slapping together quick protoypes that were just for proof of concept and didn't need to be maintained. I think of testing like financial accounting; I know it's vital to keep operations running smoothly, but I much prefer if somebody else handles it.
-
+h
 I'm getting better though, and it's paying off. You've probably already read about the reasons you should write tests. If you're still not convinced, consider this: it's quickly becoming table stakes for most modern web development projects, much like knowing how to use [Github](http://github.com). If you want to contribute to open source projects, or make it past your first interview, you've gotta write tests.
 
 ### Unit, Integration, Functional, and Acceptance
@@ -27,7 +27,7 @@ If you've spent 30 minutes tinkering with Node.js, there's a really good chance 
         supertest = require('supertest'),
         api = supertest('http://localhost:5000');
 
-Note that we're passing in the base URL of our API. As a sidenote, if you're writing your API in [Express](http://expressjs.com), you can use SuperTest to hook write into your application without actually running it as a server.
+Note that we're passing in the base URL of our API. As a sidenote, if you're writing your API in [Express](http://expressjs.com), you can use SuperTest to hook right into your application without actually running it as a server.
 
 ### Test Already!
 Install Mocha (`npm install -g mocha`) and check out the [getting started section](http://visionmedia.github.com/mocha/#getting-started). To summarize, you can group little tests (assertions) within `it()` functions, and then group those into higher level groups within `describe` functions. How many things you test in each `it` and how you group those into `describe` blocks is mostly a matter of style and preference. You'll also evenutally end up using the `before` and `beforeEach` features, but our sample test doesn't need them.
