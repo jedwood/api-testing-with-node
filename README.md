@@ -10,7 +10,7 @@ I don't like writing tests. Just ask any of my coding teammates. I spent too man
 I'm getting better though, and it's paying off. You've probably already read about the reasons you should write tests. If you're still not convinced, consider this: it's quickly becoming table stakes for most modern web development projects, much like knowing how to use [Github](http://github.com). If you want to contribute to open source projects, or make it past your first interview, you've gotta write tests.
 
 ### Unit, Integration, Functional, and Acceptance
-I'm going to skip the [philosophy](http://www.agitar.com/downloads/TheWayOfTestivus.pdf) and finer points. Read this answer for a great explanation of the [different types of tests](http://stackoverflow.com/a/4904533). On the most granular level we have unit tests. On the other end of the spectrum were have browser-testing tools like [PhantomJS](http://phantomjs.org/) or SaaS options like [BrowserStack](http://browserstack.com) and [Browserling](http://browserling.com). We're going to be closer to that high level testing, but since this is purely an API, we don't need a browser.
+I'm going to skip the [philosophy](http://www.agitar.com/downloads/TheWayOfTestivus.pdf) and finer points. Read this answer for a great explanation of the [different types of tests](http://stackoverflow.com/a/4904533). On the most granular level we have unit tests. On the other end of the spectrum we have browser-testing tools like [PhantomJS](http://phantomjs.org/) or SaaS options like [BrowserStack](http://browserstack.com) and [Browserling](http://browserling.com). We're going to be closer to that high level testing, but since this is purely an API, we don't need a browser.
 
 ### Our Example API
 Let's take a look at our example API, which is a protected pretend blog. In order to show off some of the testing options, this API:
@@ -21,7 +21,7 @@ Let's take a look at our example API, which is a protected pretend blog. In orde
 - sends proper status codes with errors
 
 ### Mocha, Chai, and SuperTest
-If you've spent 30 minutes tinkering with Node.js, there's a really good chance you've seen the work of [TJ Holowaychuck](https://github.com/visionmedia) and his army of ferrets. His [Mocha testing framework](http://visionmedia.github.com/mocha/) is popular and we'll be using it as a base. Fewer people have seen his [SuperTest](https://github.com/visionmedia/supertest) library, which adds some really nice shortcuts specifically for testing HTTP calls. Finally, we're including [Chai](http://chaijs.com/) just to round out the syntax goodness.
+If you've spent 30 minutes tinkering with Node.js, there's a really good chance you've seen the work of [TJ Holowaychuck](https://github.com/visionmedia) and his army of ferrets. His [Mocha testing framework](http://mochajs.org/) is popular and we'll be using it as a base. Fewer people have seen his [SuperTest](https://github.com/visionmedia/supertest) library, which adds some really nice shortcuts specifically for testing HTTP calls. Finally, we're including [Chai](http://chaijs.com/) just to round out the syntax goodness.
 
     var should = require('chai').should(),
         supertest = require('supertest'),
@@ -30,7 +30,7 @@ If you've spent 30 minutes tinkering with Node.js, there's a really good chance 
 Note that we're passing in the base URL of our API. As a sidenote, if you're writing your API in [Express](http://expressjs.com), you can use SuperTest to hook write into your application without actually running it as a server.
 
 ### Test Already!
-Install Mocha (`npm install -g mocha`) and check out the [getting started section](http://visionmedia.github.com/mocha/#getting-started). To summarize, you can group little tests (assertions) within `it()` functions, and then group those into higher level groups within `describe` functions. How many things you test in each `it` and how you group those into `describe` blocks is mostly a matter of style and preference. You'll also evenutally end up using the `before` and `beforeEach` features, but our sample test doesn't need them.
+Install Mocha (`npm install -g mocha`) and check out the [getting started section](http://mochajs.org/#getting-started). To summarize, you can group little tests (assertions) within `it()` functions, and then group those into higher level groups within `describe` functions. How many things you test in each `it` and how you group those into `describe` blocks is mostly a matter of style and preference. You'll also evenutally end up using the `before` and `beforeEach` features, but our sample test doesn't need them.
 
 Let's start with authentication. We want to make sure this API returns proper errors if somebody doesn't get past our two authentication checks:
 
@@ -57,6 +57,8 @@ So here's what that looks like:
       mocha --timeout 5000 --reporter nyan $(TESTS)
 
     .PHONY: test
+
+*[UPDATE TWO YEARS LATER]* It's now pretty common to instead include your test command as part of the `scripts` block in the `package.json` file. Then tests can be run with `npm test`. 
 
 The two flags in there are increasing the default timeout of 2000ms and telling Mocha to use the excellent [nyan reporter](https://vimeo.com/44180900).
 
